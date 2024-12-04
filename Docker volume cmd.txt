@@ -1,0 +1,30 @@
+					Docker volume 
+# 1. Create a volume
+docker volume create my-volume
+
+# 2. List volumes
+docker volume ls
+
+# 3. Inspect the volume
+docker volume inspect my-volume
+
+# 4. Run a container with the volume mounted
+docker run -d --name my-container -v my-volume:/data nginx
+
+# 5. Write data inside the container to the volume
+docker exec -it my-container bash
+echo "Hello from the Docker volume!" > /data/hello.txt
+
+# 6. Stop and remove the container
+docker stop my-container
+docker rm my-container
+
+# 7. Run a new container with the same volume to verify data persistence
+docker run -it --name new-container -v my-volume:/data nginx bash
+cat /data/hello.txt  # Should output: Hello from the Docker volume!
+
+# 8. Clean up: Remove the volume
+docker volume rm my-volume
+
+# 9. Optionally, remove all unused volumes
+docker volume prune

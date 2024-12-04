@@ -1,0 +1,135 @@
+					Docker Swarm
+1. Initialize Docker Swarm (on the Manager Node)
+Step 1: Set up Docker Swarm on the Manager node (the main server that controls the cluster):
+
+>> docker swarm init --advertise-addr <MANAGER-IP>
+
+Replace <MANAGER-IP> with the IP address of your manager node.
+
+Step 2: After initializing the swarm, Docker will show you a command to let other nodes (workers) join your swarm. It will look something like:
+
+>> docker swarm join --token <WORKER-TOKEN> <MANAGER-IP>:2377
+
+Keep this token for the worker nodes.
+
+2. Join Worker Nodes to the Swarm
+Step 3: On each Worker node, run the join command you got from the manager:
+
+>> docker swarm join --token <WORKER-TOKEN> <MANAGER-IP>:2377
+
+This will add the worker node to the swarm.
+
+3. Deploy a Service
+Step 4: Now, you can deploy a service (a running container) on the Swarm. For example, to run a simple nginx web server with 3 replicas (copies) running on the cluster:
+
+>> docker service create --name webserver --replicas 3 -p 8080:80 nginx
+
+--replicas 3: Runs 3 copies of the nginx container.
+-p 8080:80: Exposes port 80 in the container to port 8080 on the host machine.
+
+4. View the Service and Its Status
+Step 5: Check if the service is running properly:
+
+>> docker service ls
+
+This shows you a list of services and their status (how many replicas are running).
+
+Step 6: To see detailed info about where the service's containers (tasks) are running:
+
+>> docker service ps webserver
+
+5. Scale the Service (Add/Remove Replicas)
+Step 7: You can change the number of replicas. For example, to scale to 5 replicas:
+
+>> docker service scale webserver=5
+
+6. Update the Service
+Step 8: If you want to update the service (like using a new image), run:
+
+>>docker service update --image nginx:latest webserver
+
+7. Remove the Service
+Step 9: If you want to stop and remove the service:
+
+>>docker service rm webserver
+
+8. View and Manage the Swarm Cluster
+Step 10: To see details about the Swarm, including which nodes are part of it:
+
+>>docker node ls
+
+Step 11: To inspect the current state of your Swarm:
+
+>>docker info
+
+9. Remove Nodes or Leave the Swarm
+Step 12: If you want a worker node to leave the Swarm:
+
+>>docker swarm leave
+
+Step 13: If the manager node is the last manager and you want to remove it from the swarm:
+
+>>docker swarm leave --force
+
+10. Clean Up (Dismantle the Swarm)
+Step 14: If you want to remove the entire Swarm, make sure all nodes leave the swarm (manager and workers):
+
+>>docker swarm leave --force
+
+
+Global Mode in Docker Swarm:
+
+>> docker service create --name log-collector --mode global log-collector-image
+
+Replicated (Replica) Mode in Docker Swarm:
+
+>> docker service create --name web-service --replicas 3 web-image
+
+	Scaling in Replicated Mode
+	>> docker service scale web-service=5
+
+Specify a Node in Replicated Mode
+
+Example: Using Node Labels with Constraints
+Label a Node: First, apply a label to a node so you can use it as a constraint for service placement.
+
+Example: Label a node node-1 with a custom label:
+
+>> docker node update --label-add role=frontend node-1
+
+Create a Replicated Service with Constraints: Next, deploy a service with a constraint that specifies the service should run only on nodes with the role=frontend label.
+
+>> docker service create --name web-service --replicas 3 --constraint 'node.labels.role == frontend' web-image
+
+Common Node Constraints
+You can specify nodes based on their:
+
+Role: node.role == worker or node.role == manager
+Label: node.labels.<label-name> == <value>
+Platform: node.platform.os == linux or node.platform.os == windows
+Node ID or Hostname: node.id == <node-id> or node.hostname == <hostname>
+
+Examples of Constraints in Replicated Mode:
+Deploy to Worker Nodes Only:
+
+>> docker service create --name web-service --replicas 3 --constraint 'node.role == worker' web-image
+
+Deploy to a Node with a Specific Label:
+
+>> docker service create --name web-service --replicas 3 --constraint 'node.labels.role == frontend' web-image
+
+Deploy to a Specific Node by Hostname:
+
+>> docker service create --name web-service --replicas 3 --constraint 'node.hostname == node-1' web-image
+
+Deploy to Nodes Running Linux:
+
+>> docker service create --name web-service --replicas 3 --constraint 'node.platform.os == linux' web-image
+
+
+
+
+
+
+
+

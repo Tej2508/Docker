@@ -1,0 +1,10 @@
+FROM php:8.1-apache
+
+# Install necessary PHP extensions
+RUN docker-php-ext-install mysqli
+
+# Copy application files to the container
+COPY . /var/www/html/
+
+# Set permissions (if needed)
+RUN chown -R www-data:www-data /var/www/html

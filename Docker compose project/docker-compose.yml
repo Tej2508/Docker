@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"  # Map port 80 in the container to port 8080 on the host
+    volumes:
+      - .:/var/www/html  # Bind mount the current directory to the container
+    depends_on:
+      - db  # Ensure the db service starts before the app
+
+  db:
+    image: mysql:5.7  # Use the MySQL 5.7 image
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Root password
+      MYSQL_DATABASE: sample_name  # Database name to create
+      MYSQL_USER: admin  # Database user
+      MYSQL_PASSWORD: Teju#2001  # User password
+    ports:
+      - "3306:3306"  # Map MySQL port
+    volumes:
+      - db_data:/var/lib/mysql  # Persist data
+
+volumes:
+  db_data:  # Define a volume for database persistence

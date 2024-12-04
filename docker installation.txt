@@ -1,0 +1,31 @@
+sudo yum update -y
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io -y
+docker --version
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl restart docker
+
+
+
+Docker compose
+
+On Linux:
+Download the current stable release of Docker Compose:
+
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+Apply executable permissions:
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+Verify the installation:
+
+docker-compose --version
+
+
+sudo usermod -aG docker $USER
+ls -l /var/run/docker.sock
+sudo chown root:docker /var/run/docker.sock
+

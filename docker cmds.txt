@@ -1,0 +1,80 @@
+
+Step 1: Set Up Your Application
+Create a Simple Application
+Create a directory for your project and navigate to it:
+
+mkdir myapp
+cd myapp
+
+vi index.html  --> insert the application html code
+vi dockerfile  --> this  is the associate dockerfile
+
+
+Step 2: Create a Dockerfile
+Create a Dockerfile in the same directory:
+
+Step 3: Build the Docker Image
+Open a terminal in the project directory and run:
+
+docker build -t myapp .
+This command builds the Docker image and tags it as myapp.
+
+Step 4: Run the Docker Container
+
+docker run -d -p 80:80 myapp
+
+docker run --rm -d -p 3000:3001 <image Id>
+
+This command runs your application in the background and maps port 80 of the host to port 80 of the container.
+
+Step 5: Access the Application
+Open a web browser and go to:
+
+http://localhost
+
+eg- 10.10.89.33:80
+
+You should see output 
+
+Step 6: Manage Your Docker Container
+to view the images
+docker images
+
+To view running containers:
+docker ps
+
+To stop the container:
+docker stop <container_id>
+
+To remove the container:
+docker rm <container_id>
+
+Optional: Clean Up
+Remove the Docker image (if needed):
+docker rmi <image id>
+
+This process gives you a complete workflow for creating, building, and running a simple Dockerized application on port 80. Adjust the code and configurations as necessary for your specific application.
+
+
+Docker Hub
+
+# Log in to Docker Hub
+docker login -u <user_name> (teju2508)
+password:<Teju@2001>
+
+# Build the Docker image
+docker build -t your_dockerhub_username/your_image_name:tag .
+
+# Push the image to Docker Hub
+docker push your_dockerhub_username/your_image_name:tag
+
+# Pull the image from Docker Hub
+docker pull your_dockerhub_username/your_image_name:tag
+
+# Run the pulled image
+docker run -d -p 80:80 your_dockerhub_username/your_image_name:tag
+
+
+
+
+

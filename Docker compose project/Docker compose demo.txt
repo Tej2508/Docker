@@ -1,0 +1,54 @@
+					Docker compose demo
+
+Certainly! Here’s a detailed step-by-step guide to create a complete end-to-end Docker Compose setup for your PHP application with a MySQL database, including all necessary files and configurations.
+
+Step 1: Directory Structure
+Create a new directory for your project:
+
+my-php-app/
+├── docker-compose.yml
+├── Dockerfile
+├── index.html (or the name you prefer)
+├── submit_details.php
+
+Step 2: Create the HTML Form
+index.html (or form.html)
+
+Step 3: Create the PHP Submission Script
+submit_details.php
+
+Here's the PHP code for handling form submissions and inserting data into the MySQL database:
+
+Step 4: Create the Dockerfile
+Dockerfile
+
+This file defines the Docker image for your PHP application:
+
+Step 5: Create the Docker Compose Configuration
+docker-compose.yml
+
+This file orchestrates the PHP application and the MySQL database:
+
+Step 6: Build and Run the Application
+Navigate to your project directory and run:
+
+docker-compose up --build -d
+
+
+This command builds the images and starts the containers.
+
+Step 7: Access the Application
+Open your web browser and go to http://localhost:8080. You should see the user details form.
+
+Step 8: Submitting Data
+Fill out the form and submit it. If everything is configured correctly, you should see a success message, and the data should be inserted into the MySQL database.
+
+Step 9: Stopping the Application
+To stop the containers and remove them, use:
+
+
+docker-compose down
+
+
+Assessing the database : docker exec -it <mysql_container_id> mysql -u admin -p
+

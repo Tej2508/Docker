@@ -1,0 +1,63 @@
+Docker networking commands allow you to manage networks, connect containers, and inspect network configurations. Here are some commonly used Docker networking commands:
+
+1. List Networks
+
+>>docker network ls
+
+This command lists all Docker networks available on your system.
+
+2. Inspect a Network
+
+>> docker network inspect <network_name_or_id>
+
+This command provides detailed information about a specific network, including connected containers.
+
+3. Create a Network
+
+>>docker network create <network_name>
+
+You can specify options like network type (e.g., bridge, overlay) with flags.
+
+4. Remove a Network
+
+>> docker network rm <network_name_or_id>
+
+This command removes a specified network, provided no containers are connected to it.
+
+5. Connect a Container to a Network
+
+>> docker network connect <network_name> <container_name_or_id>
+
+This command connects an existing container to a specified network.
+
+6. Disconnect a Container from a Network
+
+>> docker network disconnect <network_name> <container_name_or_id>
+
+Use this command to disconnect a container from a specified network.
+
+7. Network Types
+Bridge: Default network type; containers can communicate with each other.
+Host: The container shares the host’s networking stack.
+Overlay: Used for multi-host networking, typically with Docker Swarm.
+
+8. Viewing Container Network Settings
+
+>> docker inspect <container_name_or_id>
+
+This command shows detailed network settings for a specific container, including IP address, network mode, etc.
+
+Example Commands
+Create a bridge network:
+
+>> docker network create my_bridge
+
+Connect a container:
+
+>> docker network connect my_bridge my_container
+
+Inspect a network:
+
+>> docker network inspect my_bridge
+
+These commands can help you manage and troubleshoot networking issues in Docker. Let me know if you need help with specific networking tasks!

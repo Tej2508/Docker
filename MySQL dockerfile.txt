@@ -1,0 +1,51 @@
+Dockerfile to create a MySQL container:
+
+# Use official MySQL image from the Docker Hub
+FROM mysql:latest
+
+# Set environment variables (optional, for setting root password, etc.)
+ENV MYSQL_ROOT_PASSWORD=root_password
+ENV MYSQL_DATABASE=sample_name
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=Teju#2001
+
+# Expose the MySQL port
+EXPOSE 3306
+
+# Start MySQL service (this is usually the default command in the base image)
+CMD ["mysqld"]
+
+
+
+Explanation:
+FROM mysql:latest: This specifies the official MySQL image from Docker Hub, which includes MySQL pre-installed.
+ENV MYSQL_ROOT_PASSWORD=root_password: Set the root password for MySQL (replace root_password with your desired password).
+ENV MYSQL_DATABASE=my_database: Create a new database upon container startup (replace my_database with the name of the database you want to create).
+ENV MYSQL_USER=my_user: Creates a new user (replace my_user with your desired username).
+ENV MYSQL_PASSWORD=my_password: Sets the password for the new user (replace my_password with the password for your MySQL user).
+EXPOSE 3306: Exposes the default MySQL port (3306).
+CMD ["mysqld"]: This is the default command that starts the MySQL server.
+How to build and run the container:
+Build the Docker image: In the directory where the Dockerfile is located, run:
+
+docker build -t my-mysql-image .
+Run the Docker container: Once the image is built, you can run the MySQL container:
+
+docker run --name my-mysql-container -d my-mysql-image
+Or you can run it with a volume to persist data:
+
+docker run --name my-mysql-container -d -v mysql-data:/var/lib/mysql my-mysql-image
+In the above command:
+
+-d runs the container in detached mode.
+--name my-mysql-container gives the container a name.
+-v mysql-data:/var/lib/mysql attaches a Docker volume (mysql-data) to persist MySQL data across container restarts.
+Connect to MySQL:
+To connect to the MySQL instance running inside the container:
+
+docker exec -it my-mysql-container mysql -u root -p
+Enter the root password (the one you set in MYSQL_ROOT_PASSWORD).
+
+This will drop you into the MySQL command-line client where you can run SQL queries.
+
+If you don't want to create a user and database or set the root password in the Dockerfile, you can omit the ENV variables and set them later when running the container, or you can also pass them as environment variables when running the container.
